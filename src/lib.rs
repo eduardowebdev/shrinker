@@ -5,6 +5,7 @@
 //! two (original or re-encoded) is written to disk.
 
 pub mod batch;
+pub mod cli;
 pub mod compress;
 pub mod encode;
 pub mod format;

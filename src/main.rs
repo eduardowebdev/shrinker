@@ -1,3 +1,8 @@
-fn main() {
-    println!("shrinker v{}", env!("CARGO_PKG_VERSION"));
+use anyhow::Result;
+use clap::Parser;
+use shrinker::cli::{self, Cli};
+
+fn main() -> Result<()> {
+    let cli = Cli::parse();
+    cli::run(cli)
 }
