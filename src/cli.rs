@@ -3,7 +3,7 @@ use std::path::PathBuf;
 use anyhow::{bail, Context, Result};
 use clap::{Args, Parser, Subcommand};
 
-use crate::batch::{self, BatchOptions};
+use crate::batch;
 use crate::compress::{self, CompressOptions};
 use crate::format::parse_target_format;
 use crate::progress::Progress;

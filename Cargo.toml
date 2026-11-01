@@ -27,7 +27,6 @@ indicatif = "0.17"
 oxipng = { version = "9.0", default-features = false, features = ["parallel", "zopfli"] }
 rayon = "1.10"
 walkdir = "2.5"
-webp = "0.3"
 
 [dev-dependencies]
 assert_cmd = "2.0"

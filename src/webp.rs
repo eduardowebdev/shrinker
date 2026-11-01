@@ -1,7 +1,9 @@
+use std::io::Cursor;
 use std::path::Path;
 
 use anyhow::{anyhow, Context, Result};
-use image::GenericImageView;
+use image::codecs::webp::WebPEncoder;
+use image::{DynamicImage, ExtendedColorType, GenericImageView, ImageEncoder};
 
 use crate::types::CompressedImage;
 
@@ -12,17 +14,18 @@ pub fn encode_lossless(path: &Path) -> Result<CompressedImage> {
     encode_lossless_image(&img)
 }
 
-pub fn encode_lossless_image(img: &image::DynamicImage) -> Result<CompressedImage> {
+pub fn encode_lossless_image(img: &DynamicImage) -> Result<CompressedImage> {
     let (width, height) = img.dimensions();
     if width == 0 || height == 0 {
         return Err(anyhow!("image has zero dimensions"));
     }
     let rgba = img.to_rgba8();
-    let encoder = webp::Encoder::from_rgba(rgba.as_raw(), width, height);
-    let memory = encoder.encode_lossless();
-    let data: Vec<u8> = (*memory).to_vec();
+    let mut buf: Vec<u8> = Vec::new();
+    WebPEncoder::new_lossless(Cursor::new(&mut buf))
+        .write_image(rgba.as_raw(), width, height, ExtendedColorType::Rgba8)
+        .map_err(|e| anyhow!("webp encode failed: {e}"))?;
     Ok(CompressedImage {
-        data,
+        data: buf,
         extension: "webp".to_string(),
         width,
         height,
