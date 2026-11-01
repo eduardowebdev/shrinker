@@ -56,7 +56,12 @@ pub fn compress_file(path: &Path, options: &CompressOptions) -> Result<Compressi
         }
     }
 
-    let output = io::resolve_output(path, &extension, options.output.as_deref(), options.in_place)?;
+    let output = io::resolve_output(
+        path,
+        &extension,
+        options.output.as_deref(),
+        options.in_place,
+    )?;
     io::write_bytes(&output, &payload)?;
     let final_size = io::file_size(&output)?;
 

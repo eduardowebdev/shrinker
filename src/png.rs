@@ -23,8 +23,7 @@ pub fn optimize(path: &Path) -> Result<CompressedImage> {
 pub fn optimize_bytes(bytes: &[u8]) -> Result<Vec<u8>> {
     let mut options = Options::max_compression();
     options.strip = StripChunks::Safe;
-    oxipng::optimize_from_memory(bytes, &options)
-        .map_err(|e| anyhow!("oxipng failed: {e}"))
+    oxipng::optimize_from_memory(bytes, &options).map_err(|e| anyhow!("oxipng failed: {e}"))
 }
 
 fn read_dimensions(bytes: &[u8]) -> Result<(u32, u32)> {

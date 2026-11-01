@@ -12,12 +12,7 @@ fn make_png(dir: &Path, name: &str, w: u32, h: u32) -> Result<PathBuf, Box<dyn E
     let path = dir.join(name);
     let mut img = RgbaImage::new(w, h);
     for (x, y, pixel) in img.enumerate_pixels_mut() {
-        *pixel = Rgba([
-            (x % 256) as u8,
-            (y % 256) as u8,
-            ((x + y) % 256) as u8,
-            255,
-        ]);
+        *pixel = Rgba([(x % 256) as u8, (y % 256) as u8, ((x + y) % 256) as u8, 255]);
     }
     img.save(&path)?;
     Ok(path)

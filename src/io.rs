@@ -12,15 +12,14 @@ pub fn read_bytes(path: &Path) -> Result<Vec<u8>> {
 
 pub fn write_bytes(path: &Path, data: &[u8]) -> Result<()> {
     ensure_parent(path)?;
-    let mut file = File::create(path)
-        .with_context(|| format!("failed to create {}", path.display()))?;
+    let mut file =
+        File::create(path).with_context(|| format!("failed to create {}", path.display()))?;
     file.write_all(data)
         .with_context(|| format!("failed to write {}", path.display()))
 }
 
 pub fn file_size(path: &Path) -> Result<u64> {
-    let meta = fs::metadata(path)
-        .with_context(|| format!("failed to stat {}", path.display()))?;
+    let meta = fs::metadata(path).with_context(|| format!("failed to stat {}", path.display()))?;
     Ok(meta.len())
 }
 

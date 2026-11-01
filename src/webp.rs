@@ -9,8 +9,7 @@ use crate::types::CompressedImage;
 
 /// Decode any supported image and re-encode it as lossless WebP.
 pub fn encode_lossless(path: &Path) -> Result<CompressedImage> {
-    let img = image::open(path)
-        .with_context(|| format!("failed to decode {}", path.display()))?;
+    let img = image::open(path).with_context(|| format!("failed to decode {}", path.display()))?;
     encode_lossless_image(&img)
 }
 
